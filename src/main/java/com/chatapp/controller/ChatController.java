@@ -11,18 +11,17 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class ChatController {
 
-    @MessageMapping("/chat.connectChat")
-    @SendTo("/topic/all")
-    public ChatMessage connectChat(@Payload ChatMessage chatMessage , SimpMessageHeaderAccessor simpMessageHeaderAccessor){
-        simpMessageHeaderAccessor.getSessionAttributes().put("username",chatMessage.getSender());
-
+    @MessageMapping("/chat.send")
+    @SendTo("/topic/public")
+    public ChatMessage sendMessage(@Payload final ChatMessage chatMessage){
         return chatMessage;
     }
 
 
     @MessageMapping("/chat.sendMessage")
     @SendTo("/topic/all")
-    public ChatMessage sendMessage(@Payload ChatMessage chatMessage){
+    public ChatMessage newUser(@Payload ChatMessage chatMessage, SimpMessageHeaderAccessor simpMessageHeaderAccessor){
+        simpMessageHeaderAccessor.getSessionAttributes().put("username",chatMessage.getSender());
         return chatMessage;
     }
 }

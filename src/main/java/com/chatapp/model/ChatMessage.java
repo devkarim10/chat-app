@@ -1,5 +1,8 @@
 package com.chatapp.model;
 
+import lombok.Builder;
+
+@Builder
 public class ChatMessage {
 
     private String message;
